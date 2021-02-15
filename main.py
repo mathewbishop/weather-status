@@ -6,16 +6,17 @@ import requests
 
 load_dotenv()
 
+version = os.getenv('VERSION')
 api_key = os.getenv('WEATHER_API_KEY')
+weather_data = None
 
-def print_slow(str):
+
+def print_slow(str, interval=.05):
     for l in str:
         sys.stdout.write(l)
         sys.stdout.flush()
-        time.sleep(.05)
+        time.sleep(interval)
 
-
-# 1 call per minute
 
 def fetch_weather_data(city, state):
     print("inside func   =>    " + api_key)
@@ -23,23 +24,26 @@ def fetch_weather_data(city, state):
     return data.json()
 
 
-# city = input("Enter City: ")
+print_slow("Initializing... Bootstrapping WEATHER-STATUS subroutine... END OF LINE\n")
+print_slow(f"WEATHER-STATUS --version {version}, PROCESS ID 423114, Status OK... END OF LINE\n", .02)
 
-# print_slow("STDIN READ... city: " + city + " was entered.    END OF LINE\n")
+print_slow("Please input your location...\n")
 
-# state = input("Enter State: ")
+city = input("City: ")
 
-# print_slow("STDIN READ... state: " + state + " was entered.    END OF LINE\n")
+print_slow("STDIN READ... city: " + city + " was entered.    END OF LINE\n", 0.2)
 
-# print_slow("Initializing...\n")
+state = input("Enter State: ")
 
-# print_slow("WEATHER STATUS READ...\n")
+print_slow("STDIN READ... state: " + state + " was entered.    END OF LINE\n", .02)
 
-# fetch_weather_data(city, state)
+print_slow(f"Requesting weather data for {city}, {state}...\n")
+
+weather_data = fetch_weather_data(city, state)
 
 # Main loop, run continuously until Ctrl + C
 while True:
     try:
-        print_slow("test")
+        
     except KeyboardInterrupt:
         sys.exit()
