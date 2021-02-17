@@ -45,6 +45,10 @@ def print_weather_data(weather_data, print_slow):
         longitude = weather_data['coord']['lon']
     except KeyError:
         longitude = "UNKNOWN"
+    try:
+        weather_description = weather_data['weather']['description']
+    except KeyError:
+        weather_description = "UNKNOWN"
     try: 
         temp = weather_data['main']['temp']
     except KeyError:
@@ -117,10 +121,12 @@ def print_weather_data(weather_data, print_slow):
     print_slow(f"DATE: {current_date}\n")
     # Time
     print_slow(f"CURRENT TIME IS: {current_time}\n")
+    # Description
+    print_slow(f"Current weather description at this location is: {weather_description}\n")
     # Temp
-    print_slow("TEMPERATURE..\n")
-    print_slow(f"It is currently {temp} degrees, and feels like {temp_feel}\n")
-    print_slow(f"As of {weather_data_time}, the minimum observed temperature in this area was {min_observed_temp}, and the maximum observed temperature was {max_observed_temp}\n")
+    print_slow("TEMPERATURE ...\n")
+    print_slow(f"It is currently {temp} degrees FAHRENHEIT, and feels like {temp_feel} FAHRENHEIT\n")
+    print_slow(f"As of {weather_data_time}, the minimum observed temperature in this area was {min_observed_temp} FAHRENHEIT, and the maximum observed temperature was {max_observed_temp} FAHRENHEIT\n")
     # Pressure
     print_slow(f"The atmospheric pressure is {pressure} hPa\n")
     # Humidity
