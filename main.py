@@ -13,7 +13,7 @@ s = sched.scheduler(time.time, time.sleep)
 weather_data = None
 
 
-def print_slow(str, interval=.04):
+def print_slow(str, interval=.03):
     for l in str:
         sys.stdout.write(l)
         sys.stdout.flush()
@@ -45,16 +45,18 @@ def fetch_weather_data(city, state):
 
 sample_weather_obj = {'coord': {'lon': -94.4191, 'lat': 39.2461}, 'weather': [{'id': 721, 'main': 'Haze', 'description': 'haze', 'icon': '50n'}], 'base': 'stations', 'main': {'temp': -1.7, 'feels_like': -14.08, 'temp_min': -2.99, 'temp_max': -0.4, 'pressure': 1025, 'humidity': 78}, 'visibility': 8047, 'wind': {'speed': 10.36, 'deg': 360}, 'clouds': {'all': 100}, 'dt': 1613443997, 'sys': {'type': 1, 'id': 4246, 'country': 'US', 'sunrise': 1613394555, 'sunset': 1613433275}, 'timezone': -21600, 'id': 4395052, 'name': 'Liberty', 'cod': 200}
 
-def do_something(sc): 
-    print_slow("Getting weather data...\n")
-    # do your stuff
-    s.enter(5, 1, do_something, (sc,))
-
-s.enter(5, 1, do_something, (s,))
-s.run()
+prev_time = time.time()
 # Main loop, run continuously until Ctrl + C
 while True:
     try:
-        print_slow("first loop\n")
+        if time.time() - prev_time > 10:
+            print_slow("REQUESTING UPDATED WEATHER DATA... STANDBY\n")
+            time.sleep(1)
+            print_slow("WEATHER DATA UPDATED REQUEST STATUS: OK\n")
+            prev_time = time.time()
+        else:
+            print_slow("Date is: 16 Feb 2021\n", .07)
+            print_slow("Time is: 7:22PM => 19:22\n", .07)
+            time.sleep(1)
     except KeyboardInterrupt:
         sys.exit()
