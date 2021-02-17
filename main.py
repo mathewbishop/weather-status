@@ -66,7 +66,10 @@ def print_weather_data(weather_data, print_slow):
     # Humidity
     print_slow(f"The humidity percentage is {humidity}.\n")
     # Wind 
-    print_slow(f"Wind speed is {wind_speed} miles per hour, at {wind_direction} degrees. {if wind_gust wind_gust}.\n")
+    if wind_gust:
+        print_slow(f"Wind speed is {wind_speed} miles per hour, at {wind_direction} degrees. Wind gusts of {wind_gust} miles per hour reported.\n")
+    else:
+        print_slow(f"Wind speed is {wind_speed} miles per hour, at {wind_direction} degrees.\n")
     # Clouds
     print_slow(f"The percentage of cloud cover is {percentage_cloud_cover}%.\n")
     # Rain
@@ -87,17 +90,17 @@ def print_weather_data(weather_data, print_slow):
 
 # Initialize
 print_slow("Initializing... Bootstrapping WEATHER-STATUS subroutine... END OF LINE\n")
-print_slow(f"WEATHER-STATUS --version {version}, PROCESS ID 423114, Status OK... END OF LINE\n", .02)
+print_slow(f"WEATHER-STATUS --version {version}, PROCESS ID 423114, Status OK... END OF LINE\n")
 
 print_slow("Please input your location...\n")
 
 city = input("City: ")
 
-print_slow("STDIN READ... city: " + city + " was entered.    END OF LINE\n", 0.2)
+print_slow("STDIN READ... city: " + city + " was entered.    END OF LINE\n")
 
 state = input("Enter State: ")
 
-print_slow("STDIN READ... state: " + state + " was entered.    END OF LINE\n", .02)
+print_slow("STDIN READ... state: " + state + " was entered.    END OF LINE\n")
 
 print_slow(f"Requesting weather data for {city}, {state}...\n")
 
