@@ -24,7 +24,7 @@ def fetch_weather_data(city, state):
     print_slow("WEATHER DATA UPDATED ... STATUS OK\n")
     return data.json()
 
-def print_weather_data(weather_data, print_slow):
+def print_weather_data(weather_data, state, print_slow):
     current_date = datetime.date.today().strftime("%b %d %Y")
     current_time = datetime.datetime.now().strftime("%H:%M:%S")
     
@@ -46,7 +46,7 @@ def print_weather_data(weather_data, print_slow):
     except KeyError:
         longitude = "UNKNOWN"
     try:
-        weather_description = weather_data['weather']['description']
+        weather_description = weather_data['weather'][0]['description']
     except KeyError:
         weather_description = "UNKNOWN"
     try: 
@@ -116,7 +116,7 @@ def print_weather_data(weather_data, print_slow):
                                                                                             
 
     # Location
-    print_slow(f"LOCATION: {city}; COORDINATES: {latitude}, {longitude}\n")
+    print_slow(f"LOCATION: {city}, {state}; COORDINATES: {latitude}, {longitude}\n")
     # Date
     print_slow(f"DATE: {current_date}\n")
     # Time
@@ -183,6 +183,11 @@ while True:
             weather_data = fetch_weather_data(city, state)
             prev_weather_update_time = time.time()
         else:
-            print_weather_data(weather_data, print_slow)
+            print_weather_data(weather_data, state, print_slow)
     except KeyboardInterrupt:
         sys.exit()
+
+
+
+# Example data
+# {'coord': {'lon': -94.4191, 'lat': 39.2461}, 'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01n'}], 'base': 'stations', 'main': {'temp': 1.02, 'feels_like': -9.08, 'temp_min': -2.2, 'temp_max': 3, 'pressure': 1025, 'humidity': 78}, 'visibility': 10000, 'wind': {'speed': 6.46, 'deg': 103}, 'clouds': {'all': 1}, 'dt': 1613538600, 'sys': {'type': 1, 'id': 4246, 'country': 'US', 'sunrise': 1613480880, 'sunset': 1613519744}, 'timezone': -21600, 'id': 4395052, 'name': 'Liberty', 'cod': 200}
