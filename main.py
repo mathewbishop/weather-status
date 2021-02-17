@@ -14,7 +14,7 @@ s = sched.scheduler(time.time, time.sleep)
 weather_data = None
 
 
-def print_slow(str, interval=.03):
+def print_slow(str, interval=.08):
     for l in str:
         sys.stdout.write(l)
         sys.stdout.flush()
@@ -151,20 +151,20 @@ def print_weather_data(weather_data, print_slow):
 
 
 # Initialize
-print_slow("Initializing... Bootstrapping WEATHER-STATUS subroutine... END OF LINE\n")
-print_slow(f"WEATHER-STATUS --version {version}, PROCESS ID 423114, Status OK... END OF LINE\n")
+print_slow("Initializing ... Bootstrapping WEATHER-STATUS subroutine ... END OF LINE\n", .03)
+print_slow(f"WEATHER-STATUS --version {version}, PROCESS ID {os.getpid()}, STATUS OK ... END OF LINE\n", .03)
 
-print_slow("Please input your location...\n")
+print_slow("Please input your location:\n", .04)
 
 city = input("City: ")
 
-print_slow("STDIN READ... city: " + city + " was entered.    END OF LINE\n")
+print_slow("STDIN READ ... city: " + city + " was entered.    END OF LINE\n", .02)
 
 state = input("Enter State: ")
 
-print_slow("STDIN READ... state: " + state + " was entered.    END OF LINE\n")
+print_slow("STDIN READ... state: " + state + " was entered.    END OF LINE\n", .02)
 
-print_slow(f"Requesting weather data for {city}, {state}...\n")
+print_slow(f"Requesting weather data for {city}, {state}...\n", .05)
 
 weather_data = fetch_weather_data(city, state)
 
@@ -173,7 +173,7 @@ prev_weather_update_time = time.time()
 # Main loop, run continuously until Ctrl + C
 while True:
     try:
-        if time.time() - prev_weather_update_time > 60:
+        if time.time() - prev_weather_update_time > 120:
             weather_data = fetch_weather_data(city, state)
             print_slow("REQUESTING UPDATED WEATHER DATA... STANDBY\n")
             time.sleep(1)
