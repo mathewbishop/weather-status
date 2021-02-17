@@ -27,51 +27,96 @@ def fetch_weather_data(city, state):
     return data.json()
 
 def print_weather_data(weather_data, print_slow):
-    # Location
-    print_slow(f"LOCATION: {weather_data['name']}; COORDINATES: {weather_data['coord']['lat']}, {weather_data['coord']['lon']}\n")
-    
-    # Date
     current_date = datetime.date.today().strftime("%b %d %Y")
-    print_slow(f"DATE: {current_date}\n")
-
-    # Time
     current_time = datetime.datetime.now().strftime("%H:%M:%S")
+
+    weather_data_time = datetime.datetime.fromtimestamp(weather_data['dt']).strftime("%H:%M:%S")
+    city = weather_data['name']
+    latitude = weather_data['coord']['lat']
+    longitude = weather_data['coord']['lon']
+    temp = weather_data['main']['temp']
+    temp_feel = weather_data['main']['feels_like']
+    min_observed_temp = weather_data['main']['temp_min']
+    max_observed_temp = weather_data['main']['temp_max']
+    pressure = weather_data['main']['pressure']
+    humidity = weather_data['main']['humidity']
+    wind_speed = weather_data['wind']['speed']
+    wind_direction = weather_data['wind']['deg']
+    wind_gust = weather_data['wind']['gust']
+    percentage_cloud_cover = weather_data['clouds']['all']
+    last_1hr_rain = weather_data['rain']['1h']
+    last_3hr_rain = weather_data['rain']['3h']
+    last_1hr_snow = weather_data['snow']['1h']
+    last_3hr_snow = weather_data['snow']['3h']
+    sunrise = datetime.datetime.fromtimestamp(weather_data['sys']['sunrise']).strftime("%H:%M:%S")
+    sunset = datetime.datetime.fromtimestamp(weather_data['sys']['sunset']).strftime("%H:%M:%S")
+
+    # Location
+    print_slow(f"LOCATION: {city}; COORDINATES: {latitude}, {longitude}\n")
+    # Date
+    print_slow(f"DATE: {current_date}\n")
+    # Time
     print_slow(f"CURRENT TIME IS: {current_time}\n")
+    # Temp
+    print_slow("TEMPERATURE..\n")
+    print_slow(f"It is currently {temp} degrees, and feels like {temp_feel}.\n")
+    print_slow(f"As of {weather_data_time}, the minimum observed temperature in this area was {min_observed_temp}, and the maximum observed temperature was {max_observed_temp}.\n")
+    # Pressure
+    print_slow(f"The atmospheric pressure is {pressure} hPa.\n")
+    # Humidity
+    print_slow(f"The humidity percentage is {humidity}.\n")
+    # Wind 
+    print_slow(f"Wind speed is {wind_speed} miles per hour, at {wind_direction} degrees. {if wind_gust wind_gust}.\n")
+    # Clouds
+    print_slow(f"The percentage of cloud cover is {percentage_cloud_cover}%.\n")
+    # Rain
+    if last_1hr_rain:
+        print_slow(f"In the last hour it has rained {last_1hr_rain} millimeters.\n")
+    if last_3hr_rain:
+        print_slow(f"In the last 3 hours it has rained {last_3hr_rain} millimeters.\n")
+    # Snow
+    if last_1hr_snow:
+        print_slow(f"In the last hour it has snowed {last_1hr_snow} millimeters.\n")
+    if last_3hr_snow:
+        print_slow(f"In the last 3 hours it has snowed {last_3hr_snow} millimeters.\n")
+    # Sunrise
+    print_slow(f"SUNRISE AT: {sunrise}.\n")
+    # Sunset
+    print_slow(f"SUNSET AT: {sunset}.\n")
 
 
+# Initialize
+print_slow("Initializing... Bootstrapping WEATHER-STATUS subroutine... END OF LINE\n")
+print_slow(f"WEATHER-STATUS --version {version}, PROCESS ID 423114, Status OK... END OF LINE\n", .02)
 
-# print_slow("Initializing... Bootstrapping WEATHER-STATUS subroutine... END OF LINE\n")
-# print_slow(f"WEATHER-STATUS --version {version}, PROCESS ID 423114, Status OK... END OF LINE\n", .02)
+print_slow("Please input your location...\n")
 
-# print_slow("Please input your location...\n")
+city = input("City: ")
 
-# city = input("City: ")
+print_slow("STDIN READ... city: " + city + " was entered.    END OF LINE\n", 0.2)
 
-# print_slow("STDIN READ... city: " + city + " was entered.    END OF LINE\n", 0.2)
+state = input("Enter State: ")
 
-# state = input("Enter State: ")
+print_slow("STDIN READ... state: " + state + " was entered.    END OF LINE\n", .02)
 
-# print_slow("STDIN READ... state: " + state + " was entered.    END OF LINE\n", .02)
+print_slow(f"Requesting weather data for {city}, {state}...\n")
 
-# print_slow(f"Requesting weather data for {city}, {state}...\n")
+weather_data = fetch_weather_data(city, state)
 
-# weather_data = fetch_weather_data(city, state)
-
-sample_weather_obj = {'coord': {'lon': -94.4191, 'lat': 39.2461}, 'weather': [{'id': 721, 'main': 'Haze', 'description': 'haze', 'icon': '50n'}], 'base': 'stations', 'main': {'temp': -1.7, 'feels_like': -14.08, 'temp_min': -2.99, 'temp_max': -0.4, 'pressure': 1025, 'humidity': 78}, 'visibility': 8047, 'wind': {'speed': 10.36, 'deg': 360}, 'clouds': {'all': 100}, 'dt': 1613443997, 'sys': {'type': 1, 'id': 4246, 'country': 'US', 'sunrise': 1613394555, 'sunset': 1613433275}, 'timezone': -21600, 'id': 4395052, 'name': 'Liberty', 'cod': 200}
+# sample_weather_obj = {'coord': {'lon': -94.4191, 'lat': 39.2461}, 'weather': [{'id': 721, 'main': 'Haze', 'description': 'haze', 'icon': '50n'}], 'base': 'stations', 'main': {'temp': -1.7, 'feels_like': -14.08, 'temp_min': -2.99, 'temp_max': -0.4, 'pressure': 1025, 'humidity': 78}, 'visibility': 8047, 'wind': {'speed': 10.36, 'deg': 360}, 'clouds': {'all': 100}, 'dt': 1613443997, 'sys': {'type': 1, 'id': 4246, 'country': 'US', 'sunrise': 1613394555, 'sunset': 1613433275}, 'timezone': -21600, 'id': 4395052, 'name': 'Liberty', 'cod': 200}
 
 
 prev_weather_update_time = time.time()
 # Main loop, run continuously until Ctrl + C
 while True:
     try:
-        if time.time() - prev_weather_update_time > 10:
+        if time.time() - prev_weather_update_time > 60:
+            weather_data = fetch_weather_data(city, state)
             print_slow("REQUESTING UPDATED WEATHER DATA... STANDBY\n")
             time.sleep(1)
             print_slow("WEATHER DATA UPDATED REQUEST STATUS: OK\n")
             prev_weather_update_time = time.time()
         else:
-            current_time = datetime.datetime.now().strftime("%H:%M:%S")
-            print_slow(f"CURRENT TIME IS: {current_time}\n")
-            time.sleep(1)
+            print_weather_data(weather_data, print_slow)
     except KeyboardInterrupt:
         sys.exit()
