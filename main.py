@@ -29,7 +29,7 @@ def fetch_weather_data(city, state):
 def print_weather_data(weather_data, print_slow):
     current_date = datetime.date.today().strftime("%b %d %Y")
     current_time = datetime.datetime.now().strftime("%H:%M:%S")
-
+    
     weather_data_time = datetime.datetime.fromtimestamp(weather_data['dt']).strftime("%H:%M:%S")
     city = weather_data['name']
     latitude = weather_data['coord']['lat']
@@ -105,8 +105,6 @@ print_slow("STDIN READ... state: " + state + " was entered.    END OF LINE\n")
 print_slow(f"Requesting weather data for {city}, {state}...\n")
 
 weather_data = fetch_weather_data(city, state)
-
-# sample_weather_obj = {'coord': {'lon': -94.4191, 'lat': 39.2461}, 'weather': [{'id': 721, 'main': 'Haze', 'description': 'haze', 'icon': '50n'}], 'base': 'stations', 'main': {'temp': -1.7, 'feels_like': -14.08, 'temp_min': -2.99, 'temp_max': -0.4, 'pressure': 1025, 'humidity': 78}, 'visibility': 8047, 'wind': {'speed': 10.36, 'deg': 360}, 'clouds': {'all': 100}, 'dt': 1613443997, 'sys': {'type': 1, 'id': 4246, 'country': 'US', 'sunrise': 1613394555, 'sunset': 1613433275}, 'timezone': -21600, 'id': 4395052, 'name': 'Liberty', 'cod': 200}
 
 
 prev_weather_update_time = time.time()
