@@ -34,6 +34,10 @@ def print_weather_data(weather_data, print_slow):
     current_date = datetime.date.today().strftime("%b %d %Y")
     print_slow(f"DATE: {current_date}\n")
 
+    # Time
+    current_time = datetime.datetime.now().strftime("%H:%M:%S")
+    print_slow(f"CURRENT TIME IS: {current_time}\n")
+
 
 
 # print_slow("Initializing... Bootstrapping WEATHER-STATUS subroutine... END OF LINE\n")
@@ -66,7 +70,8 @@ while True:
             print_slow("WEATHER DATA UPDATED REQUEST STATUS: OK\n")
             prev_weather_update_time = time.time()
         else:
-            print_slow("Time is: 7:22PM => 19:22\n", .07)
+            current_time = datetime.datetime.now().strftime("%H:%M:%S")
+            print_slow(f"CURRENT TIME IS: {current_time}\n")
             time.sleep(1)
     except KeyboardInterrupt:
         sys.exit()
