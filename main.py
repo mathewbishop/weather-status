@@ -30,26 +30,88 @@ def print_weather_data(weather_data, print_slow):
     current_date = datetime.date.today().strftime("%b %d %Y")
     current_time = datetime.datetime.now().strftime("%H:%M:%S")
     
-    weather_data_time = datetime.datetime.fromtimestamp(weather_data['dt']).strftime("%H:%M:%S")
-    city = weather_data['name']
-    latitude = weather_data['coord']['lat']
-    longitude = weather_data['coord']['lon']
-    temp = weather_data['main']['temp']
-    temp_feel = weather_data['main']['feels_like']
-    min_observed_temp = weather_data['main']['temp_min']
-    max_observed_temp = weather_data['main']['temp_max']
-    pressure = weather_data['main']['pressure']
-    humidity = weather_data['main']['humidity']
-    wind_speed = weather_data['wind']['speed']
-    wind_direction = weather_data['wind']['deg']
-    wind_gust = weather_data['wind']['gust']
-    percentage_cloud_cover = weather_data['clouds']['all']
-    last_1hr_rain = weather_data['rain']['1h']
-    last_3hr_rain = weather_data['rain']['3h']
-    last_1hr_snow = weather_data['snow']['1h']
-    last_3hr_snow = weather_data['snow']['3h']
-    sunrise = datetime.datetime.fromtimestamp(weather_data['sys']['sunrise']).strftime("%H:%M:%S")
-    sunset = datetime.datetime.fromtimestamp(weather_data['sys']['sunset']).strftime("%H:%M:%S")
+    # Extract relevant info from weather_data into vars
+    try:
+        weather_data_time = datetime.datetime.fromtimestamp(weather_data['dt']).strftime("%H:%M:%S")
+    except KeyError:
+        weather_data_time = "UNKNOWN"
+    try:
+        city = weather_data['name']
+    except KeyError:
+        city = "UNKNOWN"
+    try:
+        latitude = weather_data['coord']['lat']
+    except KeyError:
+        latitude = "UNKNOWN"
+    try:
+        longitude = weather_data['coord']['lon']
+    except KeyError:
+        longitude = "UNKNOWN"
+    try: 
+        temp = weather_data['main']['temp']
+    except KeyError:
+        temp = "UNKNOWN"
+    try:
+        temp_feel = weather_data['main']['feels_like']
+    except KeyError:
+        temp_feel = "UNKNOWN"
+    try:
+        min_observed_temp = weather_data['main']['temp_min']
+    except KeyError:
+        min_observed_temp = "UNKNOWN"
+    try:
+        max_observed_temp = weather_data['main']['temp_max']
+    except KeyError:
+        max_observed_temp = "UNKNOWN"
+    try:
+        pressure = weather_data['main']['pressure']
+    except KeyError:
+        pressure = "UNKNOWN"
+    try:
+        humidity = weather_data['main']['humidity']
+    except KeyError:
+        humidity = "UNKNOWN"
+    try:
+        wind_speed = weather_data['wind']['speed']
+    except KeyError:
+        wind_speed = "UNKNOWN"
+    try:
+        wind_direction = weather_data['wind']['deg']
+    except KeyError:
+        wind_direction = "UNKNOWN"
+    try:
+        wind_gust = weather_data['wind']['gust']
+    except KeyError:
+        wind_gust = "UNKNOWN" 
+    try:
+        percentage_cloud_cover = weather_data['clouds']['all']
+    except KeyError:
+        percentage_cloud_cover = "UNKNOWN"
+    try:
+        last_1hr_rain = weather_data['rain']['1h']
+    except KeyError:
+        last_1hr_rain = "UNKNOWN"
+    try:
+        last_3hr_rain = weather_data['rain']['3h']
+    except KeyError:
+        last_3hr_rain = "UNKNOWN"
+    try:
+        last_1hr_snow = weather_data['snow']['1h']
+    except KeyError:
+        last_1hr_snow = "UNKNOWN" 
+    try:
+        last_3hr_snow = weather_data['snow']['3h']
+    except KeyError:
+        last_3hr_snow = "UNKNOWN"
+    try:
+        sunrise = datetime.datetime.fromtimestamp(weather_data['sys']['sunrise']).strftime("%H:%M:%S")
+    except KeyError:
+        sunrise = "UNKNOWN"
+    try:
+        sunset = datetime.datetime.fromtimestamp(weather_data['sys']['sunset']).strftime("%H:%M:%S")
+    except KeyError:
+        sunset = "UNKNOWN"
+                                                                                            
 
     # Location
     print_slow(f"LOCATION: {city}; COORDINATES: {latitude}, {longitude}\n")
@@ -66,21 +128,21 @@ def print_weather_data(weather_data, print_slow):
     # Humidity
     print_slow(f"The humidity percentage is {humidity}.\n")
     # Wind 
-    if wind_gust:
+    if wind_gust != "UNKNOWN":
         print_slow(f"Wind speed is {wind_speed} miles per hour, at {wind_direction} degrees. Wind gusts of {wind_gust} miles per hour reported.\n")
     else:
         print_slow(f"Wind speed is {wind_speed} miles per hour, at {wind_direction} degrees.\n")
     # Clouds
     print_slow(f"The percentage of cloud cover is {percentage_cloud_cover}%.\n")
     # Rain
-    if last_1hr_rain:
+    if last_1hr_rain != "UNKNOWN":
         print_slow(f"In the last hour it has rained {last_1hr_rain} millimeters.\n")
-    if last_3hr_rain:
+    if last_3hr_rain != "UNKNOWN":
         print_slow(f"In the last 3 hours it has rained {last_3hr_rain} millimeters.\n")
     # Snow
-    if last_1hr_snow:
+    if last_1hr_snow != "UNKNOWN":
         print_slow(f"In the last hour it has snowed {last_1hr_snow} millimeters.\n")
-    if last_3hr_snow:
+    if last_3hr_snow != "UNKNOWN":
         print_slow(f"In the last 3 hours it has snowed {last_3hr_snow} millimeters.\n")
     # Sunrise
     print_slow(f"SUNRISE AT: {sunrise}.\n")
