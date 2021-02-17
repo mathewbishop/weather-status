@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 import os
 import sys
-import sched
 import time
 import datetime
 import requests
@@ -10,7 +9,6 @@ load_dotenv()
 
 version = os.getenv('VERSION')
 api_key = os.getenv('WEATHER_API_KEY')
-s = sched.scheduler(time.time, time.sleep)
 weather_data = None
 
 
@@ -22,8 +20,8 @@ def print_slow(str, interval=.08):
 
 
 def fetch_weather_data(city, state):
-    print("inside func   =>    " + api_key)
     data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city},{state},us&units=imperial&appid={api_key}")
+    print_slow("WEATHER DATA UPDATED ... STATUS OK\n")
     return data.json()
 
 def print_weather_data(weather_data, print_slow):
@@ -121,33 +119,33 @@ def print_weather_data(weather_data, print_slow):
     print_slow(f"CURRENT TIME IS: {current_time}\n")
     # Temp
     print_slow("TEMPERATURE..\n")
-    print_slow(f"It is currently {temp} degrees, and feels like {temp_feel}.\n")
-    print_slow(f"As of {weather_data_time}, the minimum observed temperature in this area was {min_observed_temp}, and the maximum observed temperature was {max_observed_temp}.\n")
+    print_slow(f"It is currently {temp} degrees, and feels like {temp_feel}\n")
+    print_slow(f"As of {weather_data_time}, the minimum observed temperature in this area was {min_observed_temp}, and the maximum observed temperature was {max_observed_temp}\n")
     # Pressure
-    print_slow(f"The atmospheric pressure is {pressure} hPa.\n")
+    print_slow(f"The atmospheric pressure is {pressure} hPa\n")
     # Humidity
-    print_slow(f"The humidity percentage is {humidity}.\n")
+    print_slow(f"The humidity percentage is {humidity}%\n")
     # Wind 
     if wind_gust != "UNKNOWN":
-        print_slow(f"Wind speed is {wind_speed} miles per hour, at {wind_direction} degrees. Wind gusts of {wind_gust} miles per hour reported.\n")
+        print_slow(f"The wind speed is {wind_speed} miles per hour, at {wind_direction} degrees. Wind gusts of {wind_gust} miles per hour were reported\n")
     else:
-        print_slow(f"Wind speed is {wind_speed} miles per hour, at {wind_direction} degrees.\n")
+        print_slow(f"The wind speed is {wind_speed} miles per hour, at {wind_direction} degrees\n")
     # Clouds
-    print_slow(f"The percentage of cloud cover is {percentage_cloud_cover}%.\n")
+    print_slow(f"The percentage of cloud cover is {percentage_cloud_cover}%\n")
     # Rain
     if last_1hr_rain != "UNKNOWN":
-        print_slow(f"In the last hour it has rained {last_1hr_rain} millimeters.\n")
+        print_slow(f"In the last hour it has rained {last_1hr_rain} millimeters\n")
     if last_3hr_rain != "UNKNOWN":
-        print_slow(f"In the last 3 hours it has rained {last_3hr_rain} millimeters.\n")
+        print_slow(f"In the last 3 hours it has rained {last_3hr_rain} millimeters\n")
     # Snow
     if last_1hr_snow != "UNKNOWN":
-        print_slow(f"In the last hour it has snowed {last_1hr_snow} millimeters.\n")
+        print_slow(f"In the last hour it has snowed {last_1hr_snow} millimeters\n")
     if last_3hr_snow != "UNKNOWN":
-        print_slow(f"In the last 3 hours it has snowed {last_3hr_snow} millimeters.\n")
+        print_slow(f"In the last 3 hours it has snowed {last_3hr_snow} millimeters\n")
     # Sunrise
-    print_slow(f"SUNRISE AT: {sunrise}.\n")
+    print_slow(f"SUNRISE AT: {sunrise} local time\n")
     # Sunset
-    print_slow(f"SUNSET AT: {sunset}.\n")
+    print_slow(f"SUNSET AT: {sunset} local time\n")
 
 
 # Initialize
@@ -164,7 +162,7 @@ state = input("Enter State: ")
 
 print_slow("STDIN READ... state: " + state + " was entered.    END OF LINE\n", .02)
 
-print_slow(f"Requesting weather data for {city}, {state}...\n", .05)
+print_slow(f"Requesting weather data for {city}, {state} ...\n", .05)
 
 weather_data = fetch_weather_data(city, state)
 
@@ -173,11 +171,10 @@ prev_weather_update_time = time.time()
 # Main loop, run continuously until Ctrl + C
 while True:
     try:
+        # Update the weather data roughly every 2 minutes
         if time.time() - prev_weather_update_time > 120:
+            print_slow("REQUESTING WEATHER DATA UPDATE ... STANDBY    END OF LINE\n")
             weather_data = fetch_weather_data(city, state)
-            print_slow("REQUESTING UPDATED WEATHER DATA... STANDBY\n")
-            time.sleep(1)
-            print_slow("WEATHER DATA UPDATED REQUEST STATUS: OK\n")
             prev_weather_update_time = time.time()
         else:
             print_weather_data(weather_data, print_slow)
