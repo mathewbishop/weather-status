@@ -26,9 +26,16 @@ def print_slow(str, interval=.08, color='white'):
 
 
 def fetch_weather_data(city, state):
-    data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city},{state},us&units=imperial&appid={api_key}")
-    print_slow("WEATHER DATA UPDATED ... STATUS OK\n")
-    return data.json()
+    # res = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city},{state},us&units=imperial&appid={api_key}")
+    res = requests.get(f"http://httpbin.org/status/404")
+    if not res.ok:
+        print_slow(f"WEATHER DATA REQUEST FAILURE ... STATUS {res.status_code}\n", .08, 'red')
+        print_slow("RE-INITIATING REQUEST ... STANDBY\n", .08, 'green')
+        time.sleep(10)
+        fetch_weather_data(city, state)
+    else:
+        print_slow("WEATHER DATA UPDATED ... STATUS OK\n")
+        return res.json()
 
 def print_weather_data(weather_data, state, print_slow):
     current_date = datetime.date.today().strftime("%b %d %Y")
@@ -161,21 +168,22 @@ def print_weather_data(weather_data, state, print_slow):
 
 
 # Initialize
-print_slow("Initializing ... Bootstrapping WEATHER-STATUS subroutine ... END OF LINE\n", .03)
-print_slow(f"WEATHER-STATUS --version {version}, PROCESS ID {os.getpid()}, STATUS OK ... END OF LINE\n", .03)
+# print_slow("Initializing ... Bootstrapping WEATHER-STATUS subroutine ... END OF LINE\n", .03)
+# print_slow(f"WEATHER-STATUS --version {version}, PROCESS ID {os.getpid()}, STATUS OK ... END OF LINE\n", .03)
 
-print_slow("Please input your location:\n", .04)
+# print_slow("Please input your location:\n", .04)
 
-city = input("City: ")
+# city = input("City: ")
 
-print_slow("STDIN READ ... city: " + city + " was entered.    END OF LINE\n", .02)
+# print_slow("STDIN READ ... city: " + city + " was entered.    END OF LINE\n", .02)
 
-state = input("Enter State: ")
+# state = input("Enter State: ")
 
-print_slow("STDIN READ... state: " + state + " was entered.    END OF LINE\n", .02)
+# print_slow("STDIN READ... state: " + state + " was entered.    END OF LINE\n", .02)
 
-print_slow(f"Requesting weather data for {city}, {state} ...\n", .05)
-
+# print_slow(f"Requesting weather data for {city}, {state} ...\n", .05)
+city = "nowhere"
+state = "al"
 weather_data = fetch_weather_data(city, state)
 
 
