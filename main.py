@@ -4,6 +4,11 @@ import sys
 import time
 import datetime
 import requests
+from colorama import init
+from termcolor import colored
+
+# For colors on Windows
+init()
 
 load_dotenv()
 
@@ -12,8 +17,9 @@ api_key = os.getenv('WEATHER_API_KEY')
 weather_data = None
 
 
-def print_slow(str, interval=.08):
-    for l in str:
+def print_slow(str, interval=.08, color='white'):
+    text = colored(str, color)
+    for l in text:
         sys.stdout.write(l)
         sys.stdout.flush()
         time.sleep(interval)
