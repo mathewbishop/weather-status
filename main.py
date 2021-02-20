@@ -29,9 +29,9 @@ def fetch_weather_data(city, state):
     res = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city},{state},us&units=imperial&appid={api_key}")
     if not res.ok:
         print_slow(Fore.RED + f"WEATHER DATA UPDATE REQUEST FAILURE ... STATUS {res.status_code}\n" + Style.RESET_ALL, .05)
-        print_slow(Fore.GREEN + "RE-INITIATING REQUEST IN ... 1 MINUTE ... STANDBY ...\n" + Style.RESET_ALL, .05)
-        time.sleep(60)
-        fetch_weather_data(city, state)
+        print_slow(Fore.GREEN + "Request will be sent again in 2 minutes ... \n" + Style.RESET_ALL, .05)
+        print_slow(Fore.GREEN + "Displaying previous weather data ... \n" + Style.RESET_ALL, .05)
+        return False
     else:
         print_slow("WEATHER DATA UPDATED ... STATUS OK\n")
         return res.json()
@@ -64,8 +64,12 @@ while True:
         # Update the weather data roughly every 2 minutes
         if time.time() - prev_weather_update_time > 120:
             print_slow("REQUESTING WEATHER DATA UPDATE ... STANDBY    END OF LINE\n", .05)
-            weather_data = fetch_weather_data(city, state)
-            prev_weather_update_time = time.time()
+            new_data = fetch_weather_data(city, state)
+            if (new_data == False):
+                print_weather_data(weather_data, Fore.CYAN + state + Style.RESET_ALL, print_slow)
+                prev_weather_update_time = time.time()
+            else:
+                prev_weather_update_time = time.time()
         else:
             print_weather_data(weather_data, Fore.CYAN + state + Style.RESET_ALL, print_slow)
     except KeyboardInterrupt:
