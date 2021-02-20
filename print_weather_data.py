@@ -2,8 +2,8 @@ import datetime
 from colorama import Fore, Style
 
 def print_weather_data(weather_data, state, print_slow):
-    current_date = datetime.date.today().strftime("%b %d %Y")
-    current_time = datetime.datetime.now().strftime("%H:%M:%S")
+    current_date = Fore.CYAN + datetime.date.today().strftime("%b %d %Y") + Style.RESET_ALL
+    current_time = Fore.CYAN + datetime.datetime.now().strftime("%H:%M:%S") + Style.RESET_ALL
     
     # Extract relevant info from weather_data into vars
     try:
@@ -107,14 +107,14 @@ def print_weather_data(weather_data, state, print_slow):
     # Pressure
     print_slow(f"The atmospheric pressure is {pressure} hPa\n")
     # Humidity
-    print_slow(f"The humidity percentage is {humidity}%\n")
+    print_slow(f"The humidity percentage is {humidity} percent\n")
     # Wind 
     if wind_gust != "UNKNOWN":
         print_slow(f"The wind speed is {wind_speed} miles per hour, at {wind_direction} degrees. Wind gusts of {wind_gust} miles per hour were reported\n")
     else:
         print_slow(f"The wind speed is {wind_speed} miles per hour, at {wind_direction} degrees\n")
     # Clouds
-    print_slow(f"The percentage of cloud cover is {percentage_cloud_cover}%\n")
+    print_slow(f"The percentage of cloud cover is {percentage_cloud_cover} percent\n")
     # Rain
     if last_1hr_rain != "UNKNOWN":
         print_slow(f"In the last hour it has rained {last_1hr_rain} millimeters\n")

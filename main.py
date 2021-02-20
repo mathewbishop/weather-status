@@ -46,13 +46,13 @@ print_slow("Please input your location:\n", .04)
 
 city = input("City: ")
 
-print_slow("STDIN READ ... city: " + city + " was entered.    END OF LINE\n", .02)
+print_slow(f"STDIN READ ... city: {Fore.CYAN + city + Style.RESET_ALL} was entered.    END OF LINE\n", .02)
 
 state = input("Enter State: ")
 
-print_slow("STDIN READ... state: " + state + " was entered.    END OF LINE\n", .02)
+print_slow(f"STDIN READ... state: {Fore.CYAN + state + Style.RESET_ALL} was entered.    END OF LINE\n", .02)
 
-print_slow(f"Requesting weather data for {city}, {state} ...\n", .05)
+print_slow(f"Requesting weather data for {Fore.CYAN + city + Style.RESET_ALL}, {Fore.CYAN + state + Style.RESET_ALL} ...\n", .05)
 
 weather_data = fetch_weather_data(city, state)
 
@@ -67,6 +67,6 @@ while True:
             weather_data = fetch_weather_data(city, state)
             prev_weather_update_time = time.time()
         else:
-            print_weather_data(weather_data, state, print_slow)
+            print_weather_data(weather_data, Fore.CYAN + state + Style.RESET_ALL, print_slow)
     except KeyboardInterrupt:
         sys.exit()
