@@ -28,7 +28,7 @@ def print_slow(text, interval=.08):
 def fetch_weather_data(city, state):
     res = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city},{state},us&units=imperial&appid={api_key}")
     if not res.ok:
-        print_slow(Fore.RED + f"WEATHER DATA REQUEST FAILURE ... STATUS {res.status_code}\n" + Style.RESET_ALL, .05)
+        print_slow(Fore.RED + f"WEATHER DATA UPDATE REQUEST FAILURE ... STATUS {res.status_code}\n" + Style.RESET_ALL, .05)
         print_slow(Fore.GREEN + "RE-INITIATING REQUEST IN ... 1 MINUTE ... STANDBY ...\n" + Style.RESET_ALL, .05)
         time.sleep(60)
         fetch_weather_data(city, state)
