@@ -7,97 +7,97 @@ def print_weather_data(weather_data, state, print_slow):
     
     # Extract relevant info from weather_data into vars
     try:
-        weather_data_time = datetime.datetime.fromtimestamp(weather_data['dt']).strftime("%H:%M:%S")
+        weather_data_time = Fore.CYAN + datetime.datetime.fromtimestamp(weather_data['dt']).strftime("%H:%M:%S") + Style.RESET_ALL
     except KeyError:
         weather_data_time = "UNKNOWN"
     try:
-        city = weather_data['name']
+        city = Fore.CYAN + weather_data['name'] + Style.RESET_ALL
     except KeyError:
         city = "UNKNOWN"
     try:
-        latitude = weather_data['coord']['lat']
+        latitude = Fore.CYAN + str(weather_data['coord']['lat']) + Style.RESET_ALL
     except KeyError:
         latitude = "UNKNOWN"
     try:
-        longitude = weather_data['coord']['lon']
+        longitude = Fore.CYAN + str(weather_data['coord']['lon']) + Style.RESET_ALL
     except KeyError:
         longitude = "UNKNOWN"
     try:
-        weather_description = weather_data['weather'][0]['description']
+        weather_description = Fore.CYAN + weather_data['weather'][0]['description'] + Style.RESET_ALL
     except KeyError:
         weather_description = "UNKNOWN"
     try: 
-        temp = weather_data['main']['temp']
+        temp = Fore.CYAN + str(weather_data['main']['temp']) + Style.RESET_ALL
     except KeyError:
         temp = "UNKNOWN"
     try:
-        temp_feel = weather_data['main']['feels_like']
+        temp_feel = Fore.CYAN + str(weather_data['main']['feels_like']) + Style.RESET_ALL
     except KeyError:
         temp_feel = "UNKNOWN"
     try:
-        min_observed_temp = weather_data['main']['temp_min']
+        min_observed_temp = Fore.CYAN + str(weather_data['main']['temp_min']) + Style.RESET_ALL
     except KeyError:
         min_observed_temp = "UNKNOWN"
     try:
-        max_observed_temp = weather_data['main']['temp_max']
+        max_observed_temp = Fore.CYAN + str(weather_data['main']['temp_max']) + Style.RESET_ALL
     except KeyError:
         max_observed_temp = "UNKNOWN"
     try:
-        pressure = weather_data['main']['pressure']
+        pressure = Fore.CYAN + str(weather_data['main']['pressure']) + Style.RESET_ALL
     except KeyError:
         pressure = "UNKNOWN"
     try:
-        humidity = weather_data['main']['humidity']
+        humidity = Fore.CYAN + str(weather_data['main']['humidity']) + Style.RESET_ALL
     except KeyError:
         humidity = "UNKNOWN"
     try:
-        wind_speed = weather_data['wind']['speed']
+        wind_speed = Fore.CYAN + str(weather_data['wind']['speed']) + Style.RESET_ALL
     except KeyError:
         wind_speed = "UNKNOWN"
     try:
-        wind_direction = weather_data['wind']['deg']
+        wind_direction = Fore.CYAN + str(weather_data['wind']['deg']) + Style.RESET_ALL
     except KeyError:
         wind_direction = "UNKNOWN"
     try:
-        wind_gust = weather_data['wind']['gust']
+        wind_gust = Fore.CYAN + str(weather_data['wind']['gust']) + Style.RESET_ALL
     except KeyError:
         wind_gust = "UNKNOWN" 
     try:
-        percentage_cloud_cover = weather_data['clouds']['all']
+        percentage_cloud_cover = Fore.CYAN + str(weather_data['clouds']['all']) + Style.RESET_ALL
     except KeyError:
         percentage_cloud_cover = "UNKNOWN"
     try:
-        last_1hr_rain = weather_data['rain']['1h']
+        last_1hr_rain = Fore.CYAN + str(weather_data['rain']['1h']) + Style.RESET_ALL
     except KeyError:
         last_1hr_rain = "UNKNOWN"
     try:
-        last_3hr_rain = weather_data['rain']['3h']
+        last_3hr_rain = Fore.CYAN + str(weather_data['rain']['3h']) + Style.RESET_ALL
     except KeyError:
         last_3hr_rain = "UNKNOWN"
     try:
-        last_1hr_snow = weather_data['snow']['1h']
+        last_1hr_snow = Fore.CYAN + str(weather_data['snow']['1h']) + Style.RESET_ALL
     except KeyError:
         last_1hr_snow = "UNKNOWN" 
     try:
-        last_3hr_snow = weather_data['snow']['3h']
+        last_3hr_snow = Fore.CYAN + str(weather_data['snow']['3h']) + Style.RESET_ALL
     except KeyError:
         last_3hr_snow = "UNKNOWN"
     try:
-        sunrise = datetime.datetime.fromtimestamp(weather_data['sys']['sunrise']).strftime("%H:%M:%S")
+        sunrise = Fore.CYAN + datetime.datetime.fromtimestamp(weather_data['sys']['sunrise']).strftime("%H:%M:%S") + Style.RESET_ALL
     except KeyError:
         sunrise = "UNKNOWN"
     try:
-        sunset = datetime.datetime.fromtimestamp(weather_data['sys']['sunset']).strftime("%H:%M:%S")
+        sunset = Fore.CYAN + datetime.datetime.fromtimestamp(weather_data['sys']['sunset']).strftime("%H:%M:%S") + Style.RESET_ALL
     except KeyError:
         sunset = "UNKNOWN"
                                                                                             
 
     # Location
-    print_slow(f"LOCATION: " + Fore.CYAN + city + ", " + state + Style.RESET_ALL + f"; COORDINATES: {latitude}, {longitude}\n")
+    print_slow(f"LOCATION: {city}, {state}; COORDINATES: {latitude}, {longitude}\n")
     # Date
-    print_slow(f"DATE: {current_date}\n")
+    print_slow(f"Today is {current_date}\n")
     # Time
-    print_slow(f"CURRENT TIME IS: {current_time}\n")
+    print_slow(f"Current time is {current_time}\n")
     # Description
     print_slow(f"Current weather description at this location is: {weather_description}\n")
     # Temp

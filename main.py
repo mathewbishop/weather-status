@@ -4,7 +4,7 @@ import sys
 import time
 import datetime
 import requests
-from colorama import init
+from colorama import init, Fore, Style
 from termcolor import colored
 from print_weather_data import print_weather_data
 
@@ -18,8 +18,7 @@ api_key = os.getenv('WEATHER_API_KEY')
 weather_data = None
 
 
-def print_slow(str, interval=.08, color='white'):
-    text = colored(str, color)
+def print_slow(text, interval=.08):
     for l in text:
         sys.stdout.write(l)
         sys.stdout.flush()
@@ -28,11 +27,10 @@ def print_slow(str, interval=.08, color='white'):
 
 def fetch_weather_data(city, state):
     res = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city},{state},us&units=imperial&appid={api_key}")
-    # res = requests.get(f"http://httpbin.org/status/404")
     if not res.ok:
-        print_slow(f"WEATHER DATA REQUEST FAILURE ... STATUS {res.status_code}\n", .05, 'red')
-        print_slow("RE-INITIATING REQUEST ... STANDBY\n", .05, 'green')
-        time.sleep(30)
+        print_slow(Fore.RED + f"WEATHER DATA REQUEST FAILURE ... STATUS {res.status_code}\n" + Style.RESET_ALL, .05)
+        print_slow(Fore.GREEN + "RE-INITIATING REQUEST IN ... 1 MINUTE ... STANDBY ...\n" + Style.RESET_ALL, .05)
+        time.sleep(60)
         fetch_weather_data(city, state)
     else:
         print_slow("WEATHER DATA UPDATED ... STATUS OK\n")
@@ -42,7 +40,7 @@ def fetch_weather_data(city, state):
 
 # Initialize
 print_slow("Initializing ... Bootstrapping WEATHER-STATUS subroutine ... END OF LINE\n", .03)
-print_slow(f"WEATHER-STATUS --version {version}, PROCESS ID {os.getpid()}, STATUS OK ... END OF LINE\n", .03)
+print_slow(f"WEATHER-STATUS --version {Fore.GREEN + version + Style.RESET_ALL}, PROCESS ID {Fore.GREEN + str(os.getpid()) + Style.RESET_ALL}, STATUS OK ... END OF LINE\n", .03)
 
 print_slow("Please input your location:\n", .04)
 
@@ -65,7 +63,7 @@ while True:
     try:
         # Update the weather data roughly every 2 minutes
         if time.time() - prev_weather_update_time > 120:
-            print_slow("REQUESTING WEATHER DATA UPDATE ... STANDBY    END OF LINE\n")
+            print_slow("REQUESTING WEATHER DATA UPDATE ... STANDBY    END OF LINE\n", .05)
             weather_data = fetch_weather_data(city, state)
             prev_weather_update_time = time.time()
         else:
