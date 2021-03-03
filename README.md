@@ -1,2 +1,5 @@
 # weather-status
-CLI app that reads out weather data for location.
+
+A CLI weather app with a bit of sci-fi flavor.
+
+Uses https://openweathermap.org API for data.
